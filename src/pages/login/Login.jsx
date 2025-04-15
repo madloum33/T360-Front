@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { Form, Input, Button, Checkbox, Typography, Card, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
-import '/PFE/visiont360-frontend/src/css/LogIn.css'
+import './LogIn.css';
 const { Title, Text } = Typography;
 
 const LoginForm = () => {
