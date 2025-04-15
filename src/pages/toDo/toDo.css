@@ -1,0 +1,115 @@
+/* Styles généraux */
+.todo-container {
+    max-width: 900px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .todo-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  /* Liste des tâches */
+  .todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-left: 30px;
+  }
+  .todo-item:hover{
+    background-color: #4285f4
+  }
+  
+  /* Élément de tâche */
+  .todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eaeaea;
+  }
+  
+  .todo-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+  
+  .todo-text {
+    font-size: 18px;
+    margin-left: 12px;
+  }
+  
+  /* Tâche mise en évidence */
+  .todo-item.highlighted {
+    background-color: #4285f4;
+    color: white;
+  }
+  
+  /* Case à cocher personnalisée */
+  .checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  
+  .checkbox.checked {
+    border-color: #4285f4;
+    background-color: white;
+  }
+  
+  .checkbox svg {
+    width: 16px;
+    height: 16px;
+    color: #4285f4;
+  }
+  
+  .checkbox-highlighted {
+    border-color: white;
+  }
+  
+  .checkbox-highlighted svg {
+    color: white;
+  }
+  
+  /* Bouton étoile */
+  .star-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .star-icon {
+    width: 24px;
+    height: 24px;
+    color: #ccc;
+    transition: color 0.2s ease;
+  }
+  
+  .star-icon.favorite {
+    color: #ffc107;
+  }
+  
+  .star-icon.star-highlighted {
+    color: white;
+  }
+  
+  .star-icon.favorite.star-highlighted {
+    color: #ffc107;
+  }
+  
