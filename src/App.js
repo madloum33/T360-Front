@@ -4,6 +4,7 @@ import Login from './pages/login/Login';
 import Profile from './pages/profile/Profilepage';
 import MainLayout from './pages/MainLayout';
 import Chat from './pages/chat/chat';
+import Demande from './pages/demande/DemandsPage';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
               <Routes>
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/chat" element={<Chat />} />
+                <Route path="/demandes" element={<Demande />} />
                 
 
                 {/* Route par défaut */}
