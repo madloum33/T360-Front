@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { Form, Input, Button, Checkbox, Typography, Card, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
-import './Login.css'; 
+import '/PFE/visiont360-frontend/src/css/LogIn.css'
 const { Title, Text } = Typography;
 
 const LoginForm = () => {
@@ -12,7 +12,7 @@ const LoginForm = () => {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      // Trim inputs and check credentials
+      
       const username = values.username?.trim();
       const password = values.password?.trim();
       
