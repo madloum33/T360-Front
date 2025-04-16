@@ -6,6 +6,7 @@ import MainLayout from './pages/MainLayout';
 import Chat from './pages/chat/chat';
 import Todo from './pages/toDo/toDo';
 import Demande from './pages/demande/DemandsPage';
+import Etudes from './pages/Etudes/etudes'
 
 const App = () => {
   return (
@@ -24,6 +25,8 @@ const App = () => {
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/toDo" element={<Todo />} />
                 <Route path="/demandes" element={<Demande />} />
+                <Route path="/etudes" element={<Etudes />} />
+
                 
 
                 {/* Route par défaut */}
