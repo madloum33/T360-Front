@@ -19,7 +19,7 @@ const Sidebar = () => {
         navigate('/etudes'); // Redirige vers la page "Etudes"
         break;
       case '4':
-        navigate('/calendrier'); // Redirige vers la page "Calendrier"
+        navigate('/calendar'); // Redirige vers la page "Calendrier"
         break;
       case '5':
         navigate('/todo'); // Redirige vers la page "To-Do"
@@ -31,22 +31,19 @@ const Sidebar = () => {
         navigate('/chat'); // Redirige vers la page "Chat"
         break;
       case '8':
-        navigate('/etudes'); // Redirige vers une autre page "Etudes"
+        navigate('/enqueteurs'); // Redirige vers une autre page "Etudes"
         break;
       case '9':
-        navigate('/enqueteurs'); // Redirige vers la page "Les enquêteurs"
+        navigate('/clients'); // Redirige vers la page "Les enquêteurs"
         break;
       case '10':
-        navigate('/clients'); // Redirige vers la page "Les clients"
+        navigate('/materiels'); // Redirige vers la page "Les clients"
         break;
       case '11':
-        navigate('/materiels'); // Redirige vers la page "Les matériels"
+        navigate('/settings'); // Redirige vers la page "Les matériels"
         break;
       case '12':
-        navigate('/settings'); // Redirige vers la page "Settings"
-        break;
-      case '13':
-        navigate('/logout'); // Redirige vers la page "Logout"
+        navigate('/logout'); // Redirige vers la page "Settings"
         break;
       default:
         console.log('Clé non reconnue :', key); // Gestion des clés non reconnues
@@ -78,12 +75,11 @@ const Sidebar = () => {
         <Menu.Item key="5">To-Do</Menu.Item>
         <Menu.Item key="6">Les demandes</Menu.Item>
         <Menu.Item key="7">Chat</Menu.Item>
-        <Menu.Item key="8">Etudes</Menu.Item>
-        <Menu.Item key="9">Les enquêteurs</Menu.Item>
-        <Menu.Item key="10">Les clients</Menu.Item>
-        <Menu.Item key="11">Les matériels</Menu.Item>
-        <Menu.Item key="12">Settings</Menu.Item>
-        <Menu.Item key="13">Logout</Menu.Item>
+        <Menu.Item key="8">Les enquêteurs</Menu.Item>
+        <Menu.Item key="9">Les clients</Menu.Item>
+        <Menu.Item key="10">Les matériels</Menu.Item>
+        <Menu.Item key="11">Settings</Menu.Item>
+        <Menu.Item key="12">Logout</Menu.Item>
       </Menu>
     </Sider>
   );

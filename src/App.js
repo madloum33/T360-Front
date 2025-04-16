@@ -6,15 +6,16 @@ import MainLayout from './pages/MainLayout';
 import Chat from './pages/chat/chat';
 import Todo from './pages/toDo/toDo';
 import Demande from './pages/demande/DemandsPage';
+import Calendar from './pages/Calendar/Calendar';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Page de connexion sans layout */}
+       
         <Route path="/login" element={<Login />} />
 
-        {/* Pages avec le layout */}
+        
         <Route
           path="/*"
           element={
@@ -24,7 +25,7 @@ const App = () => {
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/toDo" element={<Todo />} />
                 <Route path="/demandes" element={<Demande />} />
-                
+                <Route path="/Calendar" element={<Calendar/>} />
 
                 {/* Route par défaut */}
                 <Route path="*" element={<Navigate to="/login" />} />
