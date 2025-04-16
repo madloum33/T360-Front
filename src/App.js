@@ -7,15 +7,17 @@ import Chat from './pages/chat/chat';
 import Todo from './pages/toDo/toDo';
 import Demande from './pages/demande/DemandsPage';
 import Etudes from './pages/Etudes/etudes'
+import Calendar from './pages/Calendar/Calendar';
+import LesEnqueteurs from './pages/Enqueteur/EnqueteurPage';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Page de connexion sans layout */}
+       
         <Route path="/login" element={<Login />} />
 
-        {/* Pages avec le layout */}
+        
         <Route
           path="/*"
           element={
@@ -26,9 +28,8 @@ const App = () => {
                 <Route path="/toDo" element={<Todo />} />
                 <Route path="/demandes" element={<Demande />} />
                 <Route path="/etudes" element={<Etudes />} />
-
-                
-
+                <Route path="/calendar" element={<Calendar/>} />
+                <Route path="/enqueteurs" element={<LesEnqueteurs/>} />
                 {/* Route par défaut */}
                 <Route path="*" element={<Navigate to="/login" />} />
               </Routes>
