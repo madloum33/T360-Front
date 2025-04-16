@@ -7,6 +7,7 @@ import Chat from './pages/chat/chat';
 import Todo from './pages/toDo/toDo';
 import Demande from './pages/demande/DemandsPage';
 import Calendar from './pages/Calendar/Calendar';
+import LesEnqueteurs from './pages/Enqueteur/EnqueteurPage';
 
 const App = () => {
   return (
@@ -25,8 +26,8 @@ const App = () => {
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/toDo" element={<Todo />} />
                 <Route path="/demandes" element={<Demande />} />
-                <Route path="/Calendar" element={<Calendar/>} />
-
+                <Route path="/calendar" element={<Calendar/>} />
+                <Route path="/enqueteurs" element={<LesEnqueteurs/>} />
                 {/* Route par défaut */}
                 <Route path="*" element={<Navigate to="/login" />} />
               </Routes>
