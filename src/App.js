@@ -8,6 +8,7 @@ import Todo from './pages/toDo/toDo';
 import Demande from './pages/demande/DemandsPage';
 import Calendar from './pages/Calendar/Calendar';
 import LesEnqueteurs from './pages/Enqueteur/EnqueteurPage';
+import Materials from './pages/materials/materials';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
                 <Route path="/demandes" element={<Demande />} />
                 <Route path="/calendar" element={<Calendar/>} />
                 <Route path="/enqueteurs" element={<LesEnqueteurs/>} />
+                <Route path="/materials" element={<Materials/>} />
                 {/* Route par défaut */}
                 <Route path="*" element={<Navigate to="/login" />} />
               </Routes>
