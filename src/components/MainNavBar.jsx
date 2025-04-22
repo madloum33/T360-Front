@@ -37,7 +37,7 @@ const Sidebar = () => {
         navigate('/clients'); // Redirige vers la page "Les enquêteurs"
         break;
       case '10':
-        navigate('/materiels'); // Redirige vers la page "Les clients"
+        navigate('/materials'); // Redirige vers la page "Les clients"
         break;
       case '11':
         navigate('/settings'); // Redirige vers la page "Les matériels"
