@@ -1,85 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+  DashboardOutlined,
+  ReadOutlined,
+  CalendarOutlined,
+  CheckSquareOutlined,
+  FileTextOutlined,
+  MessageOutlined,
+  TeamOutlined,
+  UsergroupAddOutlined,
+  ToolOutlined,
+  CustomerServiceOutlined,
+  LogoutOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
+import { Typography } from 'antd';
+import './sidebar.css';
+import { useTheme } from '../contexts/ThemeContext';
 
 const { Sider } = Layout;
+const { Text } = Typography;
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const { isLightMode } = useTheme();
+  const [collapsed, setCollapsed] = useState(false);
 
-  const handleMenuClick = (key) => {
-    switch (key) {
-      case '1':
-        navigate('/profile'); // Redirige vers la page "Profile"
-        break;
-      case '2':
-        navigate('/dashboard'); // Redirige vers la page "Dashboard"
-        break;
-      case '3':
-        navigate('/etudes'); // Redirige vers la page "Etudes"
-        break;
-      case '4':
-        navigate('/calendar'); // Redirige vers la page "Calendrier"
-        break;
-      case '5':
-        navigate('/todo'); // Redirige vers la page "To-Do"
-        break;
-      case '6':
-        navigate('/demandes'); // Redirige vers la page "Les demandes"
-        break;
-      case '7':
-        navigate('/chat'); // Redirige vers la page "Chat"
-        break;
-      case '8':
-        navigate('/enqueteurs'); // Redirige vers une autre page "Etudes"
-        break;
-      case '9':
-        navigate('/clients'); // Redirige vers la page "Les enquêteurs"
-        break;
-      case '10':
-        navigate('/materials'); // Redirige vers la page "Les clients"
-        break;
-      case '11':
-        navigate('/settings'); // Redirige vers la page "Les matériels"
-        break;
-      case '12':
-        navigate('/logout'); // Redirige vers la page "Settings"
-        break;
-      default:
-        console.log('Clé non reconnue :', key); // Gestion des clés non reconnues
-    }
+  const handleMenuClick = (e) => {
+    const key = e.key;
+    const routes = {
+      1: '/profile',
+      2: '/dashboard',
+      3: '/etudes',
+      4: '/calendar',
+      5: '/todo',
+      6: '/demandes',
+      7: '/chat',
+      8: '/enqueteurs',
+      9: '/clients',
+      10: '/materials',
+      11: '/settings',
+      12: '/logout',
+    };
+    if (routes[key]) navigate(routes[key]);
   };
 
   return (
     <Sider
-      width={250}
-      style={{
-        background: '#fff',
-        boxShadow: '2px 0 8px 0 rgba(29, 35, 41, 0.05)',
-      }}
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      className={isLightMode ? 'sider-light' : 'sider-dark'}
     >
-      <div style={{ padding: '24px', textAlign: 'center' }}>
-        <h2 style={{ color: '#3B82F6', margin: 0 }}>T360</h2>
+      <div className={`sider-toggle ${isLightMode ? 'toggle-icon-light' : 'toggle-icon-dark'}`}>
+        {collapsed ? (
+          <MenuUnfoldOutlined
+            onClick={() => setCollapsed(false)}
+            className={isLightMode ? 'dropdown-icon-light' : 'dropdown-icon-dark'} 
+          />
+        ) : (
+          <MenuFoldOutlined
+            onClick={() => setCollapsed(true)}
+            className={isLightMode ? 'dropdown-icon-light' : 'dropdown-icon-dark'} 
+          />
+        )}
       </div>
 
+
+      <div className="demo-logo-vertical" />
       <Menu
         mode="inline"
         defaultSelectedKeys={['1']}
-        style={{ borderRight: 0 }}
-        onClick={(e) => handleMenuClick(e.key)} // Gestion des clics
+        className={isLightMode ? 'menu-light' : 'menu-dark'}
+        onClick={handleMenuClick}
       >
-        <Menu.Item key="1">Profile</Menu.Item>
-        <Menu.Item key="2">Dashboard</Menu.Item>
-        <Menu.Item key="3">Etudes</Menu.Item>
-        <Menu.Item key="4">Calendrier</Menu.Item>
-        <Menu.Item key="5">To-Do</Menu.Item>
-        <Menu.Item key="6">Les demandes</Menu.Item>
-        <Menu.Item key="7">Chat</Menu.Item>
-        <Menu.Item key="8">Les enquêteurs</Menu.Item>
-        <Menu.Item key="9">Les clients</Menu.Item>
-        <Menu.Item key="10">Les matériels</Menu.Item>
-        <Menu.Item key="11">Settings</Menu.Item>
-        <Menu.Item key="12">Logout</Menu.Item>
+        <Menu.Item key="1" icon={<UserOutlined />} >Profile</Menu.Item>
+        <Menu.Item key="2" icon={<DashboardOutlined />} >Dashboard</Menu.Item>
+        <Menu.Item key="3" icon={<ReadOutlined />} >Etudes</Menu.Item>
+        <Menu.Item key="4" icon={<CalendarOutlined />} >Calendrier</Menu.Item>
+        <Menu.Item key="5" icon={<CheckSquareOutlined />} >To-Do</Menu.Item>
+        <Menu.Item key="6" icon={<FileTextOutlined />} >Les demandes</Menu.Item>
+        <Menu.Item key="7" icon={<MessageOutlined />} >Chat</Menu.Item>
+        <Menu.Item key="8" icon={<TeamOutlined />} >Les enquêteurs</Menu.Item>
+        <Menu.Item key="9" icon={<UsergroupAddOutlined />} >Les clients</Menu.Item>
+        <Menu.Item key="10" icon={<ToolOutlined />} >Les matériels</Menu.Item>
+        <Menu.Item key="11" icon={<SettingOutlined />} >Paramètres</Menu.Item>
+        <Menu.Item key="12" icon={<LogoutOutlined />} >Déconnexion</Menu.Item>
       </Menu>
     </Sider>
   );

@@ -14,11 +14,13 @@ import {
   message
 } from 'antd';
 import { CameraOutlined } from '@ant-design/icons';
-
+import './Profilepage.css';
+import { useTheme } from '../../contexts/ThemeContext';
 const { Content } = Layout;
 const { Option } = Select;
 
 const ProfilePage = () => {
+   const { isLightMode } = useTheme();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -58,12 +60,11 @@ const ProfilePage = () => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+    <Layout className={isLightMode? 'layout-light':'layout-dark'}>
+      <Content className={isLightMode ? 'content-light' : 'content-dark'}>
         <Card 
-          title="Profile" 
-          bordered={false}
-          headStyle={{ fontSize: '20px', fontWeight: 'bold' }}
+          title={<span className={isLightMode ? 'card-title-light' : 'card-title-dark'}>Profile</span>}
+          bordered={false} className={isLightMode ? "card-light" : "card-dark"}
         >
           <Row justify="center" style={{ marginBottom: 24 }}>
             <Col>
@@ -83,11 +84,12 @@ const ProfilePage = () => {
           <Form layout="vertical" onSubmit={handleSubmit}>
             <Row gutter={24}>
               <Col span={12}>
-                <Form.Item label="Prénom">
-                  <Input
+                <Form.Item label="Prénom" className={isLightMode ? 'form-Item-light' : 'form-Item-dark'}>
+                  <Input 
                     placeholder="Entrez votre prénom"
                     value={formData.firstName}
                     onChange={e => handleChange('firstName', e.target.value)}
+                    className={isLightMode ? "input-light":'input-dark'}
                   />
                 </Form.Item>
               </Col>
@@ -97,6 +99,7 @@ const ProfilePage = () => {
                     placeholder="Entrez votre nom"
                     value={formData.lastName}
                     onChange={e => handleChange('lastName', e.target.value)}
+                    className={isLightMode ? "input-light":'input-dark'}
                   />
                 </Form.Item>
               </Col>
@@ -110,6 +113,7 @@ const ProfilePage = () => {
                     placeholder="Entrez votre email"
                     value={formData.email}
                     onChange={e => handleChange('email', e.target.value)}
+                    className={isLightMode ? "input-light":'input-dark'}
                   />
                 </Form.Item>
               </Col>
@@ -120,6 +124,7 @@ const ProfilePage = () => {
                     placeholder="Entrez votre numéro de téléphone"
                     value={formData.phone}
                     onChange={e => handleChange('phone', e.target.value)}
+                    className={isLightMode ? "input-light":'input-dark'}
                   />
                 </Form.Item>
               </Col>
@@ -132,18 +137,22 @@ const ProfilePage = () => {
                     style={{ width: '100%' }}
                     placeholder="Sélectionnez une date"
                     onChange={(date, dateString) => handleChange('birthDate', dateString)}
+                    className={isLightMode ? "input-light":'input-dark'}
                   />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item label="Genre">
-                  <Select
-                    value={formData.gender}
-                    onChange={value => handleChange('gender', value)}
-                  >
-                    <Option value="Homme">Homme</Option>
-                    <Option value="Femme">Femme</Option>
-                  </Select>
+                <Select
+                  value={formData.gender}
+                  onChange={value => handleChange('gender', value)}
+                  className={isLightMode ? "select-light" : "select-dark"}
+                  dropdownClassName={isLightMode ? "" : "select-dropdown-dark"}
+                >
+                  <Option value="Homme">Homme</Option>
+                  <Option value="Femme">Femme</Option>
+                </Select>
+
                 </Form.Item>
               </Col>
             </Row>

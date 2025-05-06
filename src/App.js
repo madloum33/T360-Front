@@ -10,36 +10,37 @@ import Etudes from './pages/Etudes/etudes'
 import Calendar from './pages/Calendar/Calendar';
 import LesEnqueteurs from './pages/Enqueteur/EnqueteurPage';
 import Materials from './pages/materials/materials';
+import Clients from './pages/clients/clients'
+import { ThemeProvider } from './contexts/ThemeContext'; 
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-       
-        <Route path="/login" element={<Login />} />
-
-        
-        <Route
-          path="/*"
-          element={
-            <MainLayout>
-              <Routes>
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/chat" element={<Chat />} />
-                <Route path="/toDo" element={<Todo />} />
-                <Route path="/demandes" element={<Demande />} />
-                <Route path="/etudes" element={<Etudes />} />
-                <Route path="/calendar" element={<Calendar/>} />
-                <Route path="/enqueteurs" element={<LesEnqueteurs/>} />
-                <Route path="/materials" element={<Materials/>} />
-                {/* Route par défaut */}
-                <Route path="*" element={<Navigate to="/login" />} />
-              </Routes>
-            </MainLayout>
-          }
-        />
-      </Routes>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/*"
+            element={
+              <MainLayout>
+                <Routes>
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/chat" element={<Chat />} />
+                  <Route path="/toDo" element={<Todo />} />
+                  <Route path="/demandes" element={<Demande />} />
+                  <Route path="/etudes" element={<Etudes />} />
+                  <Route path="/calendar" element={<Calendar/>} />
+                  <Route path="/enqueteurs" element={<LesEnqueteurs/>} />
+                  <Route path="/materials" element={<Materials/>} />
+                  <Route path="/clients" element={<Clients/>} />
+                  <Route path="*" element={<Navigate to="/login" />} />
+                </Routes>
+              </MainLayout>
+            }
+          />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 };
 

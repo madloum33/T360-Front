@@ -1,127 +1,119 @@
 import React, { useState } from 'react';
-import './etudes.css';
+import {
+  Layout, Table, Button, Modal, Form, Input, Select, DatePicker, Card, Row, Col
+} from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { useTheme } from '../../contexts/ThemeContext';
+import './etudes.css'
+const { Content } = Layout;
+const { Option } = Select;
 
-const Etudes = () => {
+const EtudesPage = () => {
+  const { isLightMode } = useTheme();
   const [etudes, setEtudes] = useState([
-    { id: '00001', client: 'Client1', titre: 'xxxxxxxxxxxxxxxxxxxxx', date: '14 Feb 2019', type: 'xxxx', status: 'terminé' },
-    { id: '00002', client: 'Client2', titre: 'xxxxxxxxxxxxxxxxxxxxx', date: '14 Feb 2019', type: 'xxxx', status: 'en cours' },
-    { id: '00003', client: 'Client2', titre: 'xxxxxxxxxxxxxxxxxxxxx', date: '14 Feb 2019', type: 'xxxx', status: 'refusé' },
-    { id: '00004', client: 'Client3', titre: 'xxxxxxxxxxxxxxxxxxxxx', date: '14 Feb 2019', type: 'xxxx', status: 'terminé' },
-    { id: '00005', client: 'Client4', titre: 'xxxxxxxxxxxxxxxxxxxxx', date: '14 Feb 2019', type: 'xxxx', status: 'en cours' },
-    { id: '00006', client: 'Client5', titre: 'xxxxxxxxxxxxxxxxxxxxx', date: '14 Feb 2019', type: 'xxxx', status: 'terminé' },
+    { id: '00001', client: 'Client1', titre: 'Analyse de marché', date: '2019-02-14', type: 'Qualitative', status: 'terminé' },
+    { id: '00002', client: 'Client2', titre: 'Sondage satisfaction', date: '2019-02-14', type: 'Quantitative', status: 'en cours' },
+    { id: '00003', client: 'Client2', titre: 'Étude comportementale', date: '2019-02-14', type: 'Qualitative', status: 'refusé' },
   ]);
 
-  const [showModal, setShowModal] = useState(false);
-  const [nouvelleEtude, setNouvelleEtude] = useState({
-    client: '',
-    titre: '',
-    date: '',
-    type: '',
-    status: 'en cours',
-  });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [form] = Form.useForm();
 
-  const handleAjouterEtude = () => {
-    const nouvelleId = String(etudes.length + 1).padStart(5, '0');
-    const nouvelle = {
-      id: nouvelleId,
-      ...nouvelleEtude,
-    };
-    setEtudes([...etudes, nouvelle]);
-    setShowModal(false);
-    setNouvelleEtude({ client: '', titre: '', date: '', type: '', status: 'en cours' });
+  const handleAddEtude = () => {
+    form.validateFields().then(values => {
+      const newEtude = {
+        id: String(etudes.length + 1).padStart(5, '0'),
+        ...values,
+        date: values.date.format('YYYY-MM-DD'),
+      };
+      setEtudes([...etudes, newEtude]);
+      setModalVisible(false);
+      form.resetFields();
+    });
   };
 
+  const columns = [
+    { title: 'ID', dataIndex: 'id', key: 'id' },
+    { title: 'Client', dataIndex: 'client', key: 'client' },
+    { title: 'Titre', dataIndex: 'titre', key: 'titre' },
+    { title: 'Date', dataIndex: 'date', key: 'date' },
+    { title: 'Type', dataIndex: 'type', key: 'type' },
+    {
+      title: 'Statut',
+      dataIndex: 'status',
+      key: 'status',
+      render: status => {
+        let color = 'default';
+        if (status === 'terminé') color = 'green';
+        else if (status === 'en cours') color = 'blue';
+        else if (status === 'refusé') color = 'red';
+        return <span style={{ color }}>{status}</span>;
+      }
+    },
+  ];
+
   return (
-    <div className="fiche-container ">
-      <div className="etudes-header">
-        <h2>Etudes</h2>
-        <button className="btn-ajouter" onClick={() => setShowModal(true)}>
-            + Ajouter une étude
-        </button>
-      </div>
-        
-      <div className="filters">
-        <button className="filter-btn"><i className="fa fa-filter"></i> filtrer par</button>
-        <select><option>14 Feb 2019</option></select>
-        <select><option>Type d'étude</option></select>
-        <select><option>Status</option></select>
-        <button className="reset-btn">🗘 Effacer les filtres</button>
-      </div>
+    <Layout className={isLightMode? 'layout-light':'layout-dark'}>
+      <Content className={isLightMode ? 'content-light' : 'content-dark'}>
+        <Card
+          title={<span className={isLightMode ? 'card-title-light' : 'card-title-dark'}>Liste des Études</span>}
+          bordered={false} className={isLightMode ? "card-light" : "card-dark"}
+          extra={
+            <Button type="primary" icon={<PlusOutlined />} onClick={() => setModalVisible(true)}>
+              Ajouter une étude
+            </Button>
+          }
+        >
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={24} md={24}>
+              <Table 
+                className={isLightMode ? 'table-light' : 'table-dark'}
+                columns={columns}
+                dataSource={etudes}
+                rowKey="id"
+                scroll={{ x: 600 }} // Ajout d'un scroll horizontal pour les petits écrans
+              />
+            </Col>
+          </Row>
+        </Card>
 
-      <table className="etudes-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Client</th>
-            <th>Titre d’étude</th>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {etudes.map((etude) => (
-            <tr key={etude.id}>
-              <td>{etude.id}</td>
-              <td>{etude.client}</td>
-              <td>{etude.titre}</td>
-              <td>{etude.date}</td>
-              <td>{etude.type}</td>
-              <td>
-                <span className={`status ${etude.status.replace(' ', '-')}`}>
-                  {etude.status}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h2>Ajouter une étude</h2>
-            <input
-              type="text"
-              placeholder="Client"
-              value={nouvelleEtude.client}
-              onChange={(e) => setNouvelleEtude({ ...nouvelleEtude, client: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Titre d'étude"
-              value={nouvelleEtude.titre}
-              onChange={(e) => setNouvelleEtude({ ...nouvelleEtude, titre: e.target.value })}
-            />
-            <input
-              type="date"
-              value={nouvelleEtude.date}
-              onChange={(e) => setNouvelleEtude({ ...nouvelleEtude, date: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Type"
-              value={nouvelleEtude.type}
-              onChange={(e) => setNouvelleEtude({ ...nouvelleEtude, type: e.target.value })}
-            />
-            <select
-              value={nouvelleEtude.status}
-              onChange={(e) => setNouvelleEtude({ ...nouvelleEtude, status: e.target.value })}
-            >
-              <option value="en cours">En cours</option>
-              <option value="terminé">Terminé</option>
-              <option value="refusé">Refusé</option>
-            </select>
-
-            <div className="modal-actions">
-              <button onClick={handleAjouterEtude}>Ajouter</button>
-              <button onClick={() => setShowModal(false)}>Annuler</button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+        <Modal
+          title="Ajouter une nouvelle étude"
+          open={modalVisible}
+          onCancel={() => setModalVisible(false)}
+          onOk={handleAddEtude}
+          okText="Ajouter"
+          cancelText="Annuler"
+          style={{ top: 0 }}
+          className={isLightMode ? 'modal-light' : 'modal-dark'}
+        >
+          <Form form={form} layout="vertical">
+            <Form.Item label="Client" name="client" rules={[{ required: true, message: 'Champ requis' }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item label="Titre d’étude" name="titre" rules={[{ required: true, message: 'Champ requis' }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item label="Date" name="date" rules={[{ required: true, message: 'Champ requis' }]}>
+              <DatePicker style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item label="Type d’étude" name="type" rules={[{ required: true, message: 'Champ requis' }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item label="Statut" name="status" initialValue="en cours">
+              <Select 
+                  className={isLightMode ? "select-light" : "select-dark"}
+                  dropdownClassName={isLightMode ? "" : "select-dropdown-dark"}>
+                <Option value="en cours">En cours</Option>
+                <Option value="terminé">Terminé</Option>
+                <Option value="refusé">Refusé</Option>
+              </Select>
+            </Form.Item>
+          </Form>
+        </Modal>
+      </Content>
+    </Layout>
   );
 };
 
-export default Etudes;
+export default EtudesPage;

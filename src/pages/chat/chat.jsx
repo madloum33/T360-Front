@@ -3,8 +3,11 @@
 import { useState } from "react"
 import "./chat.css"
 import img from './avatar.png';
-
-// Icônes simplifiées en SVG
+import {
+  Layout,Card,Input
+} from 'antd';
+const { Content } = Layout;
+const { Search } = Input;
 const Icons = {
   ArrowLeft: () => (
     <svg
@@ -163,13 +166,29 @@ export default function ChatInterface() {
       setMessage("")
     }
   }
+  const handleSearch = (value) => {
+    console.log('Search Value:', value);
+    // Implement the search logic here (e.g., filter menu items, navigate, etc.)
+  };
 
   return (
+    <Layout style={{ minHeight: '100vh' }}>
+          <Content style={{ margin: '24px 16px' }}>
+            <Card
+              title="Chat"
+              bordered={false}
+              headStyle={{ fontSize: '20px', fontWeight: 'bold' ,textDecoration:'#1890ff underline'}}
+            >
     <div className="chat-container">
       {/* Sidebar */}
       <div className="sidebar">
         <div className="sidebar-header">
-          <h1>Chat</h1>
+        <Search
+            placeholder="Search"
+            allowClear
+            onSearch={handleSearch}
+            style={{ width: '100%', marginBottom: '16px' }}
+          />
         </div>
         <div className="contacts-list">
           {contacts.map((contact) => (
@@ -265,5 +284,8 @@ export default function ChatInterface() {
         </div>
       </div>
     </div>
+    </Card>
+    </Content>
+    </Layout>
   )
 }

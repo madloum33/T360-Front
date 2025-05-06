@@ -5,7 +5,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import './Calendar.css' 
-
+import {
+  Layout,Card
+} from 'antd';
+const { Content } = Layout;
 const Calendar = () => {
   const events = [
     {
@@ -32,6 +35,13 @@ const Calendar = () => {
   ];
 
   return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <Content style={{ margin: '24px 16px' }}>
+        <Card
+          title="Calendar"
+          bordered={false}
+          headStyle={{ fontSize: '20px', fontWeight: 'bold' ,textDecoration:'#1890ff underline'}}
+        >
     <div style={{ padding: "20px", background: "#fff", borderRadius: "10px" }}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -46,6 +56,9 @@ const Calendar = () => {
         height="auto"
       />
     </div>
+    </Card>
+    </Content>
+    </Layout>
   );
 };
 

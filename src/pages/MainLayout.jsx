@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'antd';
 import MainNavBar from '../components/MainNavBar';
 import MainTopbar from '../components/MainTopBar';
 
 const { Content } = Layout;
 
-const MainLayout = ({ children }) => {
+const AppLayout = ({ children }) => {
+  const [collapsed, setCollapsed] = useState(false); 
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout >
       <MainTopbar />
-      <Layout>
-        <MainNavBar />
-        <Content style={{ margin: '24px', padding: '24px', background: '#fff' }}>
+
+      <Layout style={{ marginTop: '60px'}}>
+        <MainNavBar  /> 
+        
+        <Content>
           {children}
         </Content>
       </Layout>
@@ -19,4 +23,4 @@ const MainLayout = ({ children }) => {
   );
 };
 
-export default MainLayout;
+export default AppLayout;
