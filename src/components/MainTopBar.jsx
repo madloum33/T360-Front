@@ -1,88 +1,77 @@
 import React from 'react';
 import {
-  DatePicker,
-  Form,
-  Divider,
-  Layout,
-  Input, 
-  Select, 
-  Avatar,
-  Dropdown,
-  Menu
-} from 'antd';
-import { 
   UserOutlined,
-  SearchOutlined,
   LogoutOutlined,
-  SettingOutlined
+  SettingOutlined,
+  BellOutlined,
+  SunOutlined,
+  MoonOutlined,
+  DownOutlined,
 } from '@ant-design/icons';
+import { Layout, Menu, Typography, Select, Avatar, Dropdown, Badge, Switch, Divider } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext';
+import './sidebar.css';
 
-const { Header } = Layout;
+const { Text } = Typography;
 const { Option } = Select;
+const { Header } = Layout;
 
 const TopBar = () => {
-  const [form] = Form.useForm();
-  
-  // Avatar dropdown menu
+  const { isLightMode, toggleTheme } = useTheme(); 
+  const navigate = useNavigate();
+
   const menu = (
-    <Menu>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        Profile
-      </Menu.Item>
-      <Menu.Item key="2" icon={<SettingOutlined />}>
-        Settings
-      </Menu.Item>
+    <Menu className={isLightMode ? 'menu-dropdown-light' : 'menu-dropdown-dark'}>
+      <Menu.Item key="1" icon={<UserOutlined />} className={isLightMode ? 'menu-item-light' : 'menu-item-dark'}>Profile</Menu.Item>
+      <Menu.Item key="2" icon={<SettingOutlined />} className={isLightMode ? 'menu-item-light' : 'menu-item-dark'}>Settings</Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" icon={<LogoutOutlined />}>
-        Logout
-      </Menu.Item>
+      <Menu.Item key="3" icon={<LogoutOutlined />} className={isLightMode ? 'menu-item-light' : 'menu-item-dark'}>Logout</Menu.Item>
     </Menu>
   );
 
   return (
-    <Header style={{ 
-      background: '#fff', 
-      padding: '0 24px',
-      height: 70,
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      boxShadow: '0 1px 4px rgba(0, 21, 41, 0.08)'
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        
-        <Input
-          placeholder="Recherche"
-          prefix={<SearchOutlined />}
-          style={{ width: 300 }}
-        />
-      </div>
-      
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-        <Select 
-          defaultValue="fr" 
-          style={{ width: 120 }}
-          bordered={false}
-          suffixIcon={null}
-        >
-          <Option value="fr">
-            <span role="img" aria-label="French">🇫🇷</span> Français
-          </Option>
-          <Option value="en">
-            <span role="img" aria-label="English">🇬🇧</span> English
-          </Option>
-        </Select>
-        
-        <Divider type="vertical" style={{ height: 24, margin: 0 }} />
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 500 }}>XXX Enqueteur</span>
-          <Dropdown overlay={menu} placement="bottomRight" arrow>
-            <Avatar 
-              src="https://randomuser.me/api/portraits/men/1.jpg" 
-              icon={<UserOutlined />}
-              style={{ cursor: 'pointer' }}
-            />
+    <Header className={isLightMode ? 'header-light' : 'header-dark'}>
+      <div className="topbar-container">
+        {/* Logo */}
+        <div className="logo-container">
+          <Text className="logo-main">
+            T<span className={isLightMode ? 'logo-sub-light' : 'logo-sub-dark'}>360</span>
+          </Text>
+        </div>
+
+        <div className="topbar-right">
+          <Badge count={3} size="small">
+            <BellOutlined className="bell-icon" />
+          </Badge>
+
+          <Select
+            defaultValue="fr"
+            className={isLightMode ? 'select-light' : 'select-dark'}
+            dropdownClassName={isLightMode ? 'dropdown-light' : 'select-dropdown-dark'}
+            bordered={false}
+            suffixIcon={null}
+          >
+            <Option value="fr">🇫🇷 Français</Option>
+            <Option value="en">🇬🇧 English</Option>
+          </Select>
+
+          <Divider type="vertical" className="divider" />
+
+          <Switch
+            checkedChildren={<SunOutlined />}
+            unCheckedChildren={<MoonOutlined />}
+            checked={isLightMode}
+            onChange={toggleTheme}
+          />
+
+          <span className={isLightMode ? 'role-light' : 'role-dark'}>Enquêteur</span>
+
+          <Dropdown overlay={menu} placement="bottomRight" arrow  className={isLightMode ? 'dropdown-light' : 'dropdown-dark'}>
+            <div >
+              <Avatar src="https://randomuser.me/api/portraits/men/1.jpg" icon={<UserOutlined  className={isLightMode ? 'dropdown-icon-light' : 'dropdown-icon-dark'}/>} />
+              <DownOutlined className={isLightMode ? 'dropdown-icon-light' : 'dropdown-icon-dark'} />
+            </div>
           </Dropdown>
         </div>
       </div>

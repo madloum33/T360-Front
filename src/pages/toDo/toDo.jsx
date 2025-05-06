@@ -1,72 +1,82 @@
-"use client"
+import React, { useState } from 'react'; 
+import { Layout, Card, Input, Checkbox } from 'antd';
+import { StarOutlined, StarFilled, CloseOutlined } from '@ant-design/icons';
+import './toDo.css';
+import { useTheme } from '../../contexts/ThemeContext';
 
-import { useState } from "react"
-import "./toDo.css"
+const { Content } = Layout;
 
-function TodoList() {
-  const [todos, setTodos] = useState([
-    { id: 1, text: "Meeting", completed: false, favorite: false },
-    { id: 2, text: "Etudes n° xxxxxxx", completed: false, favorite: true },
-    { id: 3, text: "Etudes n° xxxxxxx", completed: false, favorite: false },
-    { id: 5, text: "Etudes n° xxxxxxx", completed: false, favorite: false },
-  ])
+const ToDOPage = () => {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: 'Meeting with CEO', important: false, completed: false },
+    { id: 2, text: 'Pick up kids from school', important: true, completed: false },
+    { id: 3, text: 'Shopping with Brother', important: false, completed: false },
+  ]);
+  const [newTask, setNewTask] = useState('');
+  const { isLightMode } = useTheme();
 
-  const toggleComplete = (id) => {
-    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)))
-  }
+  const addTask = () => {
+    if (newTask.trim() === '') return;
+    const newItem = {
+      id: Date.now(),
+      text: newTask,
+      important: false,
+      completed: false,
+    };
+    setTasks([newItem, ...tasks]);
+    setNewTask('');
+  };
 
-  const toggleFavorite = (id) => {
-    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, favorite: !todo.favorite } : todo)))
-  }
+  const toggleImportant = (id) => {
+    setTasks(tasks.map(task =>
+      task.id === id ? { ...task, important: !task.important } : task
+    ));
+  };
+
+  const toggleCompleted = (id) => {
+    setTasks(tasks.map(task =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    ));
+  };
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
 
   return (
-    <div className="todo-container">
-      <h1 className="todo-title">To-Do</h1>
-
-      <div className="todo-list">
-        {todos.map((todo) => (
-          <div key={todo.id} className="todo-item ">
-            <div className="todo-content">
-              <div
-                className={`checkbox ${todo.completed ? "checked" : ""} ${todo.highlighted ? "checkbox-highlighted" : ""}`}
-                onClick={() => toggleComplete(todo.id)}
-              >
-                {todo.completed && (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                )}
+    <Layout className={isLightMode ? 'layout-light' : 'layout-dark'}>
+      <Content className={isLightMode ? 'content-light' : 'content-dark'}>
+      <Card title={<span className={isLightMode ? 'card-title-light' : 'card-title-dark'}>À Faire</span>}
+       bordered={false} className={isLightMode ? "todo-card-light" : "todo-card-dark"}>
+          <Input
+            placeholder="Write your task name here"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            onPressEnter={addTask}
+            className={isLightMode ? "todo-input-light":'todo-input-dark'}
+          />
+          {tasks.map((task) => (
+            <Card key={task.id} className={isLightMode ? "task-card-light" : "task-card-dark"}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div className="task-left">
+                <Checkbox checked={task.completed} onChange={() => toggleCompleted(task.id)} />
+                <span className={task.completed ? 'task-done' : ''}>{task.text}</span>
               </div>
-              <span className="todo-text">{todo.text}</span>
+              <div className="task-actions">
+                <span onClick={() => toggleImportant(task.id)} className="icon-action">
+                  {task.important ? <StarFilled className="icon-star" /> : <StarOutlined />}
+                </span>
+                <CloseOutlined onClick={() => deleteTask(task.id)} className="icon-close" />
+              </div>
             </div>
+          </Card>
+          
+          
+          ))}
+        </Card>
+      </Content>
+    </Layout>
+  );
+};
 
-            <button className="star-button" onClick={() => toggleFavorite(todo.id)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill={todo.favorite ? "currentColor" : "none"}
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={`star-icon ${todo.favorite ? "favorite" : ""} ${todo.highlighted ? "star-highlighted" : ""}`}
-              >
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-export default TodoList
+export default ToDOPage;
